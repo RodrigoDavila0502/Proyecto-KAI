@@ -1,4 +1,3 @@
-
 // 🧠 VARIABLES GLOBALES
 let reconocimiento;
 let escuchando = false;
@@ -15,23 +14,48 @@ window.addEventListener("load", () => {
 
   const kaiContainer = document.getElementById("kaiContainer");
   const kaiText = document.querySelector(".kai-text");
+  const introAudio = document.getElementById("introAudio");
+  const overlay = document.getElementById("overlayKai");
 
-  // ✨ PASO 1: APARECER
-  setTimeout(() => {
-    kaiContainer.classList.add("aparecer");
-    kaiText.classList.add("aparecer");
-  }, 400);
+  // 🔘 ocultar botón al inicio
+  boton.classList.remove("show");
 
-  // 🚀 PASO 2: SUBIR
-  setTimeout(() => {
-    kaiContainer.classList.add("subir");
-    kaiText.classList.add("animar");
-  }, 2200);
+  // 🖥️ ACTIVACIÓN GLOBAL (CLICK EN PANTALLA)
+  overlay.addEventListener("click", () => {
 
-  // 🔘 BOTÓN APARECE
-  setTimeout(() => {
-    boton.classList.add("show");
-  }, 3600);
+    // 🔊 activar audio REAL
+    if (introAudio) {
+      introAudio.muted = false;
+      introAudio.play().catch(() => {});
+    }
+
+    // ❌ quitar overlay
+    overlay.style.display = "none";
+
+    // ✨ PASO 1: APARECER
+    setTimeout(() => {
+      kaiContainer.classList.add("aparecer");
+      kaiText.classList.add("aparecer");
+    }, 400);
+
+    // 🚀 PASO 2: SUBIR
+    setTimeout(() => {
+      kaiContainer.classList.add("subir");
+      kaiText.classList.add("animar");
+    }, 2200);
+
+    // 🎯 MOSTRAR BOTÓN
+    if (introAudio) {
+      introAudio.addEventListener("ended", () => {
+        boton.classList.add("show");
+      });
+    } else {
+      setTimeout(() => {
+        boton.classList.add("show");
+      }, 3000);
+    }
+
+  }, { once: true });
 
 });
 
@@ -116,7 +140,7 @@ function responder(texto) {
   let respuesta = "";
 
   if (texto.includes("hola")) {
-    respuesta = "Hola, un placer conocerte... ¿qué quieres hacer hoy?";
+    respuesta = "Hola, ¿qué quieres hacer hoy?";
   }
 
   else if (esYoutube(texto)) {
@@ -135,7 +159,6 @@ function responder(texto) {
       window.open("https://www.youtube.com", "_blank");
     } else {
       respuesta = "Buscando en YouTube";
-
       const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(busqueda)}`;
       window.open(url, "_blank");
     }
@@ -147,35 +170,30 @@ function responder(texto) {
   }
 
   else if (texto.includes("calculadora de apuestas")) {
-    respuesta = "Abriendo calculadora de surebets";
+    respuesta = "Abriendo calculadora";
     window.open("https://es.surebet.com/calculator", "_blank");
   }
 
   else if (texto.includes("excel")) {
-    respuesta = "Abriendo Excel de Calculo";
+    respuesta = "Abriendo Excel";
     window.open("https://docs.google.com/spreadsheets/d/162VerR62EFFSDwxVa_c1DXBAKgtuJdfi/edit?gid=1366473076#gid=1366473076", "_blank");
   }
 
   else if (texto.includes("series")) {
-    respuesta = "Abriendo Pagina de Series";
+    respuesta = "Abriendo página de series";
     window.open("https://www.lacartoons.com/serie/capitulo/19732?t=2", "_blank");
   }
 
-   else if (
-    texto.includes("gracias")
-  ) {
-    respuesta = "Un placer haberte ayudado, recuerda en decirme lo que quieras";
+  else if (texto.includes("gracias")) {
+    respuesta = "Un placer ayudarte";
   }
 
-  else if (
-    texto.includes("que") &&
-    (texto.includes("haces") || texto.includes("haciendo"))
-  ) {
-    respuesta = "Estoy aprendiendo y evolucionando cada día contigo";
+  else if (texto.includes("que haces")) {
+    respuesta = "Aprendiendo y evolucionando";
   }
 
   else {
-    respuesta = "Aún estoy aprendiendo, pero mejoraré contigo";
+    respuesta = "Aún estoy aprendiendo contigo";
   }
 
   hablar(respuesta);
@@ -201,14 +219,13 @@ function hablar(texto) {
 }
 
 
-// 🎯 INTENCIÓN YOUTUBE
+// 🎯 DETECCIÓN YOUTUBE
 function esYoutube(texto) {
   const palabras = [
     "youtube",
     "video",
     "videos",
-    "musica",
-    "ver algo"
+    "musica"
   ];
 
   return palabras.some(p => texto.includes(p));

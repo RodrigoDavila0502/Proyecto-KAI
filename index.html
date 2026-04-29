@@ -9,6 +9,11 @@
 
 <body>
 
+  <!-- 🖥️ OVERLAY INICIAL (TIPO SISTEMA) -->
+  <div id="overlayKai">
+    <p>Inicializando sistema K.A.I...</p>
+  </div>
+
   <!-- 🧠 SISTEMA KAI -->
   <div class="intro" id="intro">
 
@@ -18,7 +23,12 @@
       </div>
     </div>
 
-    <!-- 🔘 BOTÓN PRINCIPAL -->
+    <!-- 🎬 INTRO AUDIO -->
+    <video id="introAudio" muted playsinline style="display:none">
+      <source src="audio/kai-activate.mp4" type="video/mp4">
+    </video>
+
+    <!-- 🔘 BOTÓN (aparece después) -->
     <button id="btnKai" onclick="iniciarKai()">
       ACTIVAR K.A.I
     </button>
@@ -28,28 +38,6 @@
   </div>
 
   <script src="script.js"></script>
-
-  <script>
-    window.onload = () => {
-
-      const kai = document.getElementById("kaiContainer");
-      const boton = document.getElementById("btnKai");
-
-      // ⏳ animación inicial
-      setTimeout(() => {
-
-        // 🚀 sube el sistema
-        kai.classList.add("subir");
-
-        // 🔘 aparece el botón
-        setTimeout(() => {
-          boton.classList.add("show");
-        }, 800);
-
-      }, 2000);
-
-    };
-  </script>
 
 </body>
 </html>
