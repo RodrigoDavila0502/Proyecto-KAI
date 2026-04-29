@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>OpenKai</title>
+  <link rel="stylesheet" href="style.css?v=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+  <!-- 🧠 SISTEMA KAI -->
+  <div class="intro" id="intro">
+
+    <div class="kai-container" id="kaiContainer">
+      <div id="circulo">
+        <span class="kai-text" id="kaiText">K.A.I</span>
+      </div>
+    </div>
+
+    <!-- 🔘 BOTÓN PRINCIPAL -->
+    <button id="btnKai" onclick="iniciarKai()">
+      ACTIVAR K.A.I
+    </button>
+
+    <p id="texto"></p>
+
+  </div>
+
+  <script src="script.js"></script>
+
+  <script>
+    window.onload = () => {
+
+      const kai = document.getElementById("kaiContainer");
+      const boton = document.getElementById("btnKai");
+
+      // ⏳ animación inicial
+      setTimeout(() => {
+
+        // 🚀 sube el sistema
+        kai.classList.add("subir");
+
+        // 🔘 aparece el botón
+        setTimeout(() => {
+          boton.classList.add("show");
+        }, 800);
+
+      }, 2000);
+
+    };
+  </script>
+
+</body>
+</html>
